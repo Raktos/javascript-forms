@@ -11,21 +11,45 @@
 * and add an event listener for the form's submit event
 * */
 function onReady() {
-    //we're going to populate the "year in school" dropdown menu with the contents of this array so that if we want to change the dropdown later we only need to change the values here in the array
-    var standings = ['Freshman', 'Sophomore', 'Junior', 'Senior', 'Super Senior!'];
-    var personForm = document.getElementById('person-form'); //this gets the elemnt that is the whole form
 
-    //this gets the HTML tag withint the <form> section we grabbed that has the name "standing" which in our current case is the dropdown menu
+    //This is an array of objects
+    //Objects are really just hashmaps
+    //This would probably be generated in JSON instead of the source code in the real world
+    //each set of {} is an object
+    var standings = [
+        {
+            code: 'f', //format of key: value, here the key is code and the value is the string 'f'
+            display: 'Freshman'
+        },
+        {
+            code: 's',
+            display: 'Sophomore'
+        },
+        {
+            code: 'j',
+            display: 'Junior'
+        },
+        {
+            code: 'sn',
+            display: 'Senior'
+        },
+        {
+            code: 'ss',
+            display: 'Super Senior'
+        }];
+    var personForm = document.getElementById('person-form'); //this gets the element that is the whole form
+
+    //this gets the HTML element within the <form> we grabbed above that has the id "standing" which is the dropdown menu
     var standingsSelect = personForm.elements['standing'];
 
     var i; //loop counter
     var option; //this will become a new HTML tag we will use in the loop
 
     for(i = 0; i < standings.length; ++i) {
-        option = document.createElement('option');
-        option.innerHTML = standings[i];
-        option.value = i + 1; //we added 1 because we want values to start at 1 not 0
-        standingsSelect.appendChild(option);
+        option = document.createElement('option'); //option is now a new html element <option>
+        option.innerHTML = standings[i].display; //the innerHTML of our new <option> is now the display property of the object in the array at i
+        option.value = standings[i].code; //the value sent to the server is now the code property of the object in the array at i
+        standingsSelect.appendChild(option); //our new <option> has now been added to the dropdown we grabbed earlier
     }
 
     //This will run the function onSubmit (below) when the submit button is pressed
@@ -40,10 +64,9 @@ function onReady() {
  * Also the keyword 'this' will refer to the form that is being submitted while inside this function.
  * */
 function onSubmit(evt) {
-
-    //by default the HTML is going to POST to the server, this script here is going to catch that and stop it if the form is not filled with information that we approve of
-
     //This thing is trying 3 different ways to stop the browser from submitting because not all the browsers work the same
+
+    //evt is an arbitrary variable, we could name it whatever we want, it's just the thing getting passed to this function when it is called
     evt.returnValue = validateForm(this);
     if (!evt.returnValue && evt.preventDefault) {
         evt.preventDefault();
@@ -67,6 +90,17 @@ function validateForm(form) {
         //this sets our formValid things to false if the element we're checking returns false (function below this one)
         formValid &= validateRequiredField(form.elements[requiredFields[i]]);
     }
+
+    //sets the alert paragraph text if form validation fails
+    if(!formValid) {
+        var errMsg = document.getElementById('error-message');
+        //adds text
+        errMsg.innerHTML = 'Please fill out the required fields';
+
+        //changes the style from what it is currently to 'block' (it was initially invisible, now it is visible)
+        errMsg.style.display = 'block';
+    }
+
     return formValid;
 } //validateForm()
 
@@ -81,7 +115,7 @@ function validateRequiredField(field) {
     if(valid) {
         field.className = 'form-control';
     } else {
-        //visually changes bad fields for the user by changing the CSS class of the field
+        //visually changes bad fields for the user by changing the class of the field which has a different CSS red border
         field.className = 'form-control invalid-field';
     }
     return valid;

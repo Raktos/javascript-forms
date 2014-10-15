@@ -17,6 +17,7 @@
                 <p class="lead">Tell us about yourself</p>
             </header>
 
+            <!--this is an empty paragraph, we will fill it with stuff if form validation fails-->
             <p class="alert alert-danger" id="error-message"></p>
 
             <!--This <form> and the following <label>'s and <input>'s create a series of text boxes, dropdown menus etc. that we manipulate in javascript.
@@ -24,7 +25,7 @@
             When in doubt use the method="POST", POST is the format you want to use to send information to a server
             It's not necessary but considered good style to use role="form" in <forms>'s
 
-            action="link" is where the form will submit to upon submission (with a button for exampl)-->
+            action="link" is where the form will submit to upon submission (with a button for example)-->
             <form id="person-form" action="http://info343.ischool.uw.edu:8889/echo" method="POST" role="form">
 
                 <!--"form-group" is a bootstrap CSS class, it is very similar to a "row" but functions specifically for <forms>'s-->
@@ -77,5 +78,6 @@
 
 
         <script src="js/app.js"></script>
+        <script src="js/objects.js"></script>
     </body>
 </html>
