@@ -19,10 +19,26 @@
 
             <p class="alert alert-danger" id="error-message"></p>
 
+            <!--This <form> and the following <label>'s and <input>'s create a series of text boxes, dropdown menus etc. that we manipulate in javascript.
+
+            When in doubt use the method="POST", POST is the format you want to use to send information to a server
+            It's not necessary but considered good style to use role="form" in <forms>'s
+
+            action="link" is where the form will submit to upon submission (with a button for exampl)-->
             <form id="person-form" action="http://info343.ischool.uw.edu:8889/echo" method="POST" role="form">
 
+                <!--"form-group" is a bootstrap CSS class, it is very similar to a "row" but functions specifically for <forms>'s-->
                 <div class="form-group">
+                    <!--labels are just <label>'s for sections within a <form>-->
                     <label for="first-name" class="required-field">First Name</label>
+
+                    <!--type="text" sets the type to txt, there are a variety of different input types
+
+                    name="x" is how we identify the information when it is sent to the server. Information will be sent in pairs, a name and the data the user entered into the section associated with that name
+
+                    placeholder="x" is the greyed out text that appears in a box before the user types anything
+
+                    autofocus sets that input in a form to have focus as soon as the page loads, so the user doesn't have to click anything before they start typing-->
                     <input type="text" id="first-name" name="firstName" class="form-control"
                            placeholder="your first name" autofocus/>
                 </div>
@@ -51,6 +67,7 @@
 
                 <div class="form-group text-right">
                     <div class="col-sm-12">
+                        <!-- type="submit" this button will submit to the previously chosen location upon click-->
                         <button type="submit" class="btn btn-primary">Reveal Myself to the World!</button>
                     </div>
                 </div>
